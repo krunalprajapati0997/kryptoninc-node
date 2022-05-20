@@ -3,6 +3,7 @@ var jwt = require('jsonwebtoken');
 
 const  student_Act = require("../controllers/students"); 
 const  examstudent = require('../controllers/examstudent')
+const  iamgecontroll = require('../controllers/imagecontroll')
 
 const router = express.Router();
 
@@ -17,6 +18,8 @@ router.get('/:id', student_Act.getspecStudent);
 router.post('/app', student_Act.createstudent);
 router.put('/:id', student_Act.updatestudent);
 router.delete('/:id', student_Act.deletestudent);
+
+router.post('/upload',iamgecontroll.uploadimage)
 
 
 module.exports=router;

@@ -18,6 +18,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const studentrouter= require("./routes/students");
 app.use('/',studentrouter)
 
+app.use('/uploads',express.static('uploads'));
+
 
 
 app.listen(port, () =>{
