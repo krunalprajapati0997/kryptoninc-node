@@ -51,6 +51,57 @@ const uploadimage = (req, res) => {
     })
 }
 
+const getoneimage = async (req, res) => {
+    try {
+        console.log('hey____________')
 
+        let user = await Image.find({ _id: req.params.id });
+        res.status(200)
+        res.json(user);
+    } catch (err) {
+        res.status(404).json({ message: message })
+    }
+}
 
-module.exports = { uploadimage }
+const getimage = async (req, res) => {
+    try {
+        console.log('hey')
+        const happy = await Image.find({});
+        res.status(200);
+        res.json(happy)
+    } catch (error) {
+        res.status(404).json({ message: message })
+    }
+}
+const deleteimage = async (req, res) => {
+     if(req.params.id == null || req.params.id == undefined) {
+        res.json({mesage: "id not defined", success: false})
+    } else {
+        Image.find({ _id: req.params.id }).exec(async (err, ress) => {
+            // res.json({'data':ress})
+            
+            fs.unlink("uploads/"+ress[0].profile_file, async (err) => {
+                if (err) throw err;
+                const user = await Image.findByIdAndDelete(req.params.id);
+                res.send(user)
+                res.json({success:true,message:'Accout Delete Succesfully'})
+            })
+        })      
+    }
+}
+
+const updateimage = async(req,res) =>{
+    try {
+        const id = await Image.findById(req.params.id);
+        if (!id) throw new Error("id is not find");
+        const notes = await Image.findByIdAndUpdate({ _id: req.params.id },req.body);
+        
+        const data = await notes.save();
+        res.status(200).json({success: true, message: "data update in notes",data,});
+      } catch (error) {
+        errorLogger.error(error.message);
+        res.status(400).json({ success: false, message: error.message });
+      }
+}
+
+module.exports = { uploadimage, getimage, getoneimage,deleteimage,updateimage }
