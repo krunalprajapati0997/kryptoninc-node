@@ -8,12 +8,15 @@ const  upload = require('../middlewares/upload-middleware')
 
 const router = express.Router();
 
+//loging and Registrtion with crud
 router.post('/exam/register',examstudent.registeruser);
 router.post('/exam/login',examstudent.loginstudent);
 router.get('/exam',examstudent.getExam);
 router.put('/exam/:id',examstudent.updateExam)
 router.delete('/exam/:id',examstudent.deleteEaxm);
+router.patch('/exam/forgot',examstudent.forgatepassword)
 
+//simpal crud  optration
 router.get('/student', student_Act.getStudents);
 router.get('/student/:id', student_Act.getspecStudent);
 router.post('/app', student_Act.createstudent);
@@ -21,6 +24,7 @@ router.put('/:id', student_Act.updatestudent);
 router.delete('/:id', student_Act.deletestudent);
 
 
+//image with Crud optration
 router.get("/image",iamgecontroll.getimage);
 router.post('/image',iamgecontroll.uploadimage)
 router.get('/image/:id',iamgecontroll.getoneimage)

@@ -23,7 +23,7 @@ const registeruser = async (req, res) => {
 
 
     if (req.body.username == null || req.body.phone == null || req.body.email == null || req.body.password == null) {
-        res.json({ success: false, message: 'Ensure Username,  password and email were provided' });
+        res.json({ success: false, message: 'Ensure Username,phone,  password and email were provided' });
     } else {
         user.save(function (err) {
             if (err) {
@@ -88,6 +88,25 @@ const deleteEaxm = async (req, res) => {
     }
 }
 
+const forgatepassword = async(req,res)=>{
+    var hashedPassword = await bcrypt.hash(req.body.password, SALT_WORK_FACTOR)
+    Exam.findOne({ email:req.body.email }, function(err, user) {
+        if (err) throw err;
+        if (!user) {
+            res.json({ success: false, message: 'No user found' });
+        } else{
+            user.password = hashedPassword;
+           user.save(function(err) {
+                if (err) {
+                    console.log(err); 
+                } else {
+                    res.json({ success: true, message: 'Details has been updated!' });
+                }
+            });
+        }
+    });
+}
+
 const updateExam = async (req, res) => {
     Exam.findOne({ _id: req.params.id }, function (err, user) {
         if (err) throw err
@@ -111,6 +130,8 @@ const updateExam = async (req, res) => {
 
 
 
-module.exports = {loginstudent, registeruser,
+
+
+module.exports = {loginstudent, registeruser,forgatepassword,
     getExam, deleteEaxm, updateExam
 };
