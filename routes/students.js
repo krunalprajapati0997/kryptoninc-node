@@ -4,18 +4,19 @@ var jwt = require('jsonwebtoken');
 const  student_Act = require("../controllers/students"); 
 const  examstudent = require('../controllers/examstudent')
 const  iamgecontroll = require('../controllers/imagecontroll')
+const {userregister}     = require('../middlewares/joi')
 const  upload = require('../middlewares/upload-middleware')
-const userregister = require('../middlewares/joi')
 
-const router = express.Router();
+    
+const router = express.Router() ;
 
 //loging and Registrtion with crud
-router.post('/exam/register', userregister , examstudent.registeruser);
-router.post('/exam/login', userregister, examstudent.loginstudent);
-router.get('/exam', userregister, examstudent.getExam);
-router.put('/exam/:id', userregister, examstudent.updateExam)
-router.delete('/exam/:id', userregister, examstudent.deleteEaxm);
-router.patch('/exam/forgot',userregister, examstudent.forgatepassword)
+router.post('/exam/register',userregister, examstudent.registeruser);
+router.post('/exam/login',  examstudent.loginstudent);
+router.get('/exam', examstudent.getExam);
+router.put('/exam/:id',  examstudent.updateExam)
+router.delete('/exam/:id',  examstudent.deleteEaxm);
+router.patch('/exam/forgot', examstudent.forgatepassword)
 
 //simpal crud  optration
 router.get('/student', student_Act.getStudents);

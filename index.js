@@ -3,7 +3,7 @@ const mongoose= require('mongoose');
 const bodyParser = require('body-parser');
 
 
-const port=6000;
+const port=6000;    
 
 mongoose.connect('mongodb://localhost:27017/Happy', {useUnifiedTopology: true, useNewUrlParser: true })
 .then(() => console.log('Connection Succesfully'))
