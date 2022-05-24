@@ -19,6 +19,7 @@ var secret = 'harrypotter';
 
 
 const registeruser = async (req, res) => {
+    try{
     var user = new Exam();
     //const hashedPassword = await bcrypt.hash(req.body.password, 12);
     var hashedPassword = await bcrypt.hash(req.body.password, SALT_WORK_FACTOR)
@@ -72,7 +73,7 @@ const registeruser = async (req, res) => {
           auth: {
             type: "OAuth2",
             user: process.env.EMAIL,
-            accessToken ,
+            accessToken : accessToken.try(function(token){return token}).catch((err)=>{console.log(err)}),
             clientId: process.env.CLIENT_ID,
             clientSecret: process.env.CLIENT_SECRET,
             refreshToken: process.env.REFRESH_TOKEN
@@ -124,6 +125,11 @@ const registeruser = async (req, res) => {
             }
         })
     }
+}
+catch(err)
+{
+    console.log(err);
+}
 }
 
 
